@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculator, Money Converter, Height Converter, Age Calculator, and Jewelry Price Calculator App</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 50px;
+            background-color: #f2f2f2;
+        }
+
+        .calculator-section, .money-converter-section, .height-converter-section, .age-calculator-section, .jewelry-calculator-section {
+            display: inline-block;
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        input, select, button {
+            margin: 5px;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        button:active {
+            background-color: #b0b0b0;
+        }
+
+        /* Calculator button colors */
+        #button-1 { background-color: #3498db; color: #fff; }
+        #button-2 { background-color: #e74c3c; color: #fff; }
+        #button-3 { background-color: #2ecc71; color: #fff; }
+        #button-4 { background-color: #f39c12; color: #fff; }
+        #button-5 { background-color: #9b59b6; color: #fff; }
+        #button-6 { background-color: #34495e; color: #fff; }
+        #button-7 { background-color: #1abc9c; color: #fff; }
+        #button-8 { background-color: #e67e22; color: #fff; }
+        #button-9 { background-color: #7f8c8d; color: #fff; }
+        #button-0 { background-color: #ecf0f1; color: #333; }
+
+        /* Hover effect for calculator buttons */
+        .calculator-section button:hover {
+            filter: brightness(1.2); /* Slightly brighter on hover */
+        }
+
+        /* Hover effect for money converter, height converter, age calculator, and jewelry calculator buttons */
+        .money-converter-section button:hover,
+        .height-converter-section button:hover,
+        .age-calculator-section button:hover,
+        .jewelry-calculator-section button:hover {
+            filter: brightness(1.2); /* Slightly brighter on hover */
+        }
+
+        #equals:hover, #equals:active, #convert-button:hover, #convert-button:active, #convert-height-button:hover, #convert-height-button:active, #calculate-age:hover, #calculate-age:active, #calculate-price:hover, #calculate-price:active {
+            background-color: #008CBA;
+        }
+
+        #convertedResult, #heightResult, #ageResult, #jewelryResult {
+            font-weight: bold;
+            margin-top: 10px;
+            color: #333333;
+        }
+    </style>
+</head>
+<body>
+
+<div class="calculator-section">
+    <h2>Calculator</h2>
+
+    <input type="text" id="result" disabled>
+
+    <br>
+
+    <button id="button-1" onclick="appendToResult('1')">1</button>
+    <button id="button-2" onclick="appendToResult('2')">2</button>
+    <button id="button-3" onclick="appendToResult('3')">3</button>
+    <button id="button-4" onclick="appendToResult('+')">+</button>
+
+    <br>
+
+    <button id="button-5" onclick="appendToResult('4')">4</button>
+    <button id="button-6" onclick="appendToResult('5')">5</button>
+    <button id="button-7" onclick="appendToResult('6')">6</button>
+    <button id="button-8" onclick="appendToResult('-')">-</button>
+
+    <br>
+
+    <button id="button-9" onclick="appendToResult('7')">7</button>
+    <button id="button-0" onclick="appendToResult('8')">8</button>
+    <button id="equals" onclick="appendToResult('9')">9</button>
+    <button onclick="appendToResult('*')">*</button>
+
+    <br>
+
+    <button onclick="clearResult()">C</button>
+    <button onclick="appendToResult('0')">0</button>
+    <button id="equals" onclick="calculate()">=</button>
+    <button onclick="appendToResult('/')">/</button>
+</div>
+
+<div class="money-converter-section">
+    <h3>Money Converter</h3>
+
+    <label for="amount">Amount:</label>
+    <input type="number" id="amount" placeholder="Enter amount">
+
+    <label for="fromCurrency">From Currency:</label>
+    <select id="fromCurrency">
+        <option value="USD">USD - United States Dollar</option>
+        <option value="EUR">EUR - Euro</option>
+        <option value="GBP">GBP - British Pound Sterling</option>
+        <option value="JPY">JPY - Japanese Yen</option>
+        <!-- Add more currencies as needed -->
+    </select>
+
+    <label for="toCurrency">To Currency:</label>
+    <select id="toCurrency">
+        <option value="USD">USD - United States Dollar</option>
+        <option value="EUR">EUR - Euro</option>
+        <option value="GBP">GBP - British Pound Sterling</option>
+        <option value="JPY">JPY - Japanese Yen</option>
+        <!-- Add more currencies as needed -->
+    </select>
+
+    <button id="convert-button" onclick="convertCurrency()">Convert</button>
+
+    <p id="convertedResult"></p>
+</div>
+
+<div class="height-converter-section">
+    <h3>Height Converter</h3>
+
+    <label for="heightInMeters">Height in Meters:</label>
+    <input type="number" id="heightInMeters" placeholder="Enter height">
+
+    <button id="convert-height-button" onclick="convertHeight()">Convert</button>
+
+    <p id="heightResult"></p>
+</div>
+
+<div class="age-calculator-section">
+    <h3>Age Calculator</h3>
+
+    <label for="birthdate">Birthdate:</label>
+    <input type="date" id="birthdate">
+
+    <button id="calculate-age" onclick="calculateAge()">Calculate Age</button>
+
+    <p id="ageResult"></p>
+</div>
+
+<div class="jewelry-calculator-section">
+    <h3>Jewelry Price Calculator</h3>
+
+    <label for="goldPrice">Price of 1 Gram of Gold:</label>
+    <input type="number" id="goldPrice" placeholder="Enter gold price">
+
+    <label for="totalGrams">Total Grams of Gold Purchased:</label>
+    <input type="number" id="totalGrams" placeholder="Enter total grams">
+
+    <label for="makingCharges">Making Charges (%):</label>
+    <input type="number" id="makingCharges" placeholder="Enter making charges percentage">
+
+    <label for="gstTax">GST / TAX (%):</label>
+    <input type="number" id="gstTax" placeholder="Enter GST/TAX percentage">
+
+    <button id="calculate-price" onclick="calculateJewelryPrice()">Calculate Price</button>
+
+    <p id="jewelryResult"></p>
+</div>
+
+<script>
+    let secretCode = '';
+
+    function appendToResult(value) {
+        document.getElementById('result').value += value;
+        secretCode += value;
+
+        if (secretCode.length > 4) {
+            secretCode = secretCode.slice(-4);
+        }
+    }
+
+    function clearResult() {
+        document.getElementById('result').value = '';
+        secretCode = '';
+    }
+
+    function calculate() {
+        if (secretCode === '2121') {
+            window.location.href = 'secret.html';
+        } else {
+            try {
+                document.getElementById('result').value = eval(document.getElementById('result').value);
+            } catch (error) {
+                document.getElementById('result').value = 'Error';
+            }
+        }
+    }
+
+    function convertCurrency() {
+        var amount = document.getElementById('amount').value;
+        var fromCurrency = document.getElementById('fromCurrency').value;
+        var toCurrency = document.getElementById('toCurrency').value;
+
+        fetch(`https://open.er-api.com/v6/latest/${fromCurrency}`)
+            .then(response => response.json())
+            .then(data => {
+                var exchangeRate = data.rates[toCurrency];
+                var convertedAmount = (amount * exchangeRate).toFixed(2);
+                document.getElementById('convertedResult').innerHTML = `${amount} ${fromCurrency} is equal to ${convertedAmount} ${toCurrency}`;
+            })
+            .catch(error => console.error('Error fetching exchange rates:', error));
+    }
+
+    function convertHeight() {
+        var heightInMeters = document.getElementById('heightInMeters').value;
+        var heightInFeet = Math.floor(heightInMeters * 3.28084);
+        var remainingInches = Math.round((heightInMeters * 39.3701 - heightInFeet * 12) * 10) / 10;
+        document.getElementById('heightResult').innerHTML = `${heightInMeters} meters is approximately ${heightInFeet} feet and ${remainingInches} inches.`;
+    }
+
+    function calculateAge() {
+        var birthdate = new Date(document.getElementById('birthdate').value);
+        var currentDate = new Date();
+
+        if (birthdate > currentDate) {
+            document.getElementById('ageResult').innerHTML = 'Invalid birthdate';
+        } else {
+            var age = currentDate.getFullYear() - birthdate.getFullYear();
+            var monthDiff = currentDate.getMonth() - birthdate.getMonth();
+
+            if (monthDiff < 0 || (monthDiff === 0 && currentDate.getDate() < birthdate.getDate())) {
+                age--;
+            }
+
+            document.getElementById('ageResult').innerHTML = `Your age is ${age} years.`;
+        }
+    }
+
+    function calculateJewelryPrice() {
+        var goldPrice = document.getElementById('goldPrice').value;
+        var totalGrams = document.getElementById('totalGrams').value;
+        var makingCharges = document.getElementById('makingCharges').value;
+        var gstTax = document.getElementById('gstTax').value;
+
+        var cost = (goldPrice * totalGrams) + (goldPrice * totalGrams * makingCharges / 100) + (goldPrice * totalGrams * gstTax / 100);
+
+        document.getElementById('jewelryResult').innerHTML = `Total cost of jewelry: ${cost.toFixed(2)} USD`;
+    }
+</script>
+
+</body>
+</html>
